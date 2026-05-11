@@ -57,7 +57,7 @@ export default function TopNavbar({
                 {profile?.username || "Nexora User"}
               </p>
               <p className="truncate text-xs text-slate-500">
-                {profile?.email || "operations@nexora.local"}
+                {profile?.role || "Admin"} · {profile?.email || "operations@nexora.local"}
               </p>
             </div>
           </div>

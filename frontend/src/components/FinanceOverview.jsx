@@ -10,17 +10,17 @@ export default function FinanceOverview({ finance }) {
   const highRisk = finance.filter((item) => item.payment_risk === "High").length;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <div>
+    <section className="min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-4 flex min-w-0 items-center justify-between gap-3">
+        <div className="min-w-0">
           <h2 className="text-base font-bold text-slate-950">Finance Overview</h2>
           <p className="text-sm text-slate-500">Invoice exposure and payment risk</p>
         </div>
         <StatusBadge value={highRisk > 0 ? "High" : "Low"} />
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+      <div className="grid min-w-0 grid-cols-2 gap-3">
+        <div className="min-w-0 rounded-lg border border-slate-200 bg-slate-50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Revenue
           </p>
@@ -28,7 +28,7 @@ export default function FinanceOverview({ finance }) {
             INR {totalRevenue.toLocaleString("en-IN")}
           </p>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
+        <div className="min-w-0 rounded-lg border border-slate-200 bg-slate-50 p-4">
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             High Risk
           </p>
@@ -47,10 +47,10 @@ export default function FinanceOverview({ finance }) {
             {finance.slice(0, 4).map((item) => (
               <div
                 key={item.id}
-                className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2"
+                className="flex min-w-0 items-center justify-between gap-3 rounded-lg border border-slate-100 px-3 py-2"
               >
-                <div>
-                  <p className="text-sm font-semibold text-slate-800">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-slate-800">
                     {item.shipment_code}
                   </p>
                   <p className="text-xs text-slate-500">

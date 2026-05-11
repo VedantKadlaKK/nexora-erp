@@ -3,7 +3,7 @@ import { useState } from "react";
 import EmptyState from "./EmptyState";
 import StatusBadge from "./StatusBadge";
 
-export default function CustomerPanel({ customers, shipments, onCreateCustomer }) {
+export default function CustomerPanel({ customers, shipments, audits = [], onCreateCustomer }) {
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -35,6 +35,16 @@ export default function CustomerPanel({ customers, shipments, onCreateCustomer }
         shipment.customer_id === customer.id ||
         shipment.customer_name === customer.name
     );
+  }
+
+  function customerTimeline(customer) {
+    const shipmentCodes = new Set(
+      customerShipments(customer).map((shipment) => shipment.shipment_code)
+    );
+
+    return audits
+      .filter((audit) => shipmentCodes.has(audit.shipment_code))
+      .slice(0, 3);
   }
 
   return (
@@ -79,6 +89,7 @@ export default function CustomerPanel({ customers, shipments, onCreateCustomer }
             <div className="grid gap-4 lg:grid-cols-2">
               {customers.map((customer) => {
                 const history = customerShipments(customer);
+                const timeline = customerTimeline(customer);
 
                 return (
                   <article
@@ -113,6 +124,24 @@ export default function CustomerPanel({ customers, shipments, onCreateCustomer }
                         </p>
                       </div>
                     </div>
+
+                    {timeline.length > 0 && (
+                      <div className="mt-4 border-t border-slate-100 pt-3">
+                        <p className="text-xs font-bold uppercase tracking-wide text-slate-500">
+                          Operational Timeline
+                        </p>
+                        <div className="mt-2 space-y-2">
+                          {timeline.map((audit) => (
+                            <div key={audit.id} className="text-xs text-slate-600">
+                              <span className="font-semibold text-slate-900">
+                                {audit.shipment_code}
+                              </span>{" "}
+                              {audit.action} by {audit.operator_name}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </article>
                 );
               })}

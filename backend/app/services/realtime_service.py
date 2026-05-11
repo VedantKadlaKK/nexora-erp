@@ -15,9 +15,12 @@ def serialize_shipment(shipment):
         "origin": shipment.origin,
         "destination": shipment.destination,
         "status": shipment.status,
+        "delayed_from_status": shipment.delayed_from_status,
+        "delay_reason": shipment.delay_reason,
         "payment_status": shipment.payment_status,
         "eta": shipment.eta,
         "created_at": serialize_datetime(shipment.created_at),
+        "updated_at": serialize_datetime(shipment.updated_at),
     }
 
 
@@ -53,6 +56,21 @@ def serialize_notification(notification):
     }
 
 
+def serialize_audit(audit):
+    return {
+        "id": audit.id,
+        "shipment_id": audit.shipment_id,
+        "shipment_code": audit.shipment_code,
+        "operator_id": audit.operator_id,
+        "operator_name": audit.operator_name,
+        "action": audit.action,
+        "previous_state": audit.previous_state,
+        "new_state": audit.new_state,
+        "note": audit.note,
+        "created_at": serialize_datetime(audit.created_at),
+    }
+
+
 def serialize_customer(customer):
     return {
         "id": customer.id,
@@ -79,6 +97,10 @@ async def emit_finance_updated(finance):
 
 async def emit_activity_created(activity):
     await sio.emit("activity_created", serialize_activity(activity))
+
+
+async def emit_audit_created(audit):
+    await sio.emit("audit_created", serialize_audit(audit))
 
 
 async def emit_notification_created(notification):

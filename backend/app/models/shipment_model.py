@@ -19,13 +19,19 @@ class Shipment(Base):
 
     destination = Column(String, nullable=False)
 
-    status = Column(String, default="In Transit")
+    status = Column(String, default="Created")
+
+    delayed_from_status = Column(String, nullable=True)
+
+    delay_reason = Column(String, nullable=True)
 
     payment_status = Column(String, default="Pending")
 
     eta = Column(String)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     customer = relationship("Customer", back_populates="shipments")
 
@@ -34,4 +40,9 @@ class Shipment(Base):
         back_populates="shipment",
         uselist=False,
         cascade="all, delete-orphan"
+    )
+
+    audit_logs = relationship(
+        "AuditLog",
+        back_populates="shipment"
     )

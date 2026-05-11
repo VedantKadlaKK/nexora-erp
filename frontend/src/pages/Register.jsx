@@ -11,6 +11,7 @@ export default function Register() {
     username: "",
     email: "",
     password: "",
+    role: "Admin",
   });
   const [error, setError] = useState("");
 
@@ -87,6 +88,20 @@ export default function Register() {
               className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-indigo-400"
               onChange={(e) => updateField("password", e.target.value)}
             />
+          </label>
+
+          <label className="block text-sm font-semibold text-slate-700">
+            Role
+            <select
+              value={form.role}
+              className="mt-2 w-full rounded-lg border border-slate-200 px-3 py-2 outline-none focus:border-indigo-400"
+              onChange={(e) => updateField("role", e.target.value)}
+            >
+              <option>Admin</option>
+              <option>Warehouse Staff</option>
+              <option>Logistics Staff</option>
+              <option>Finance Staff</option>
+            </select>
           </label>
         </div>
 

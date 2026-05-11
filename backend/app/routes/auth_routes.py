@@ -33,7 +33,8 @@ def register(data: dict, db: Session = Depends(get_db)):
     user = User(
         username=data["username"],
         email=data["email"],
-        password=hashed
+        password=hashed,
+        role=data.get("role", "Admin")
     )
 
     db.add(user)
@@ -85,5 +86,6 @@ def profile(current_user: User = Depends(get_current_user)):
     return {
         "id": current_user.id,
         "username": current_user.username,
-        "email": current_user.email
+        "email": current_user.email,
+        "role": current_user.role
     }
