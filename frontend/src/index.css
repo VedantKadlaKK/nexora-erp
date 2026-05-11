@@ -4,6 +4,198 @@
 
 body {
   margin: 0;
-  background: #f8fafc;
-  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.auth-background {
+  isolation: isolate;
+}
+
+.auth-grid {
+  background-image:
+    linear-gradient(rgba(79, 70, 229, 0.2) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79, 70, 229, 0.2) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 92%);
+}
+
+.auth-blueprint {
+  background-image:
+    linear-gradient(130deg, transparent 0 42%, rgba(79, 70, 229, 0.2) 42% 42.45%, transparent 42.45% 100%),
+    linear-gradient(35deg, transparent 0 58%, rgba(14, 165, 233, 0.18) 58% 58.4%, transparent 58.4% 100%),
+    repeating-linear-gradient(90deg, transparent 0 104px, rgba(15, 23, 42, 0.06) 104px 105px);
+  background-size: 680px 420px, 620px 380px, 220px 220px;
+  animation: auth-blueprint-shift 28s linear infinite;
+}
+
+.auth-sweep {
+  position: absolute;
+  left: -10%;
+  top: 8%;
+  width: 120%;
+  height: 78%;
+  border-top: 1px solid rgba(79, 70, 229, 0.14);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.12);
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.24) 43%,
+    rgba(79, 70, 229, 0.16) 50%,
+    rgba(255, 255, 255, 0.22) 57%,
+    transparent 100%
+  );
+  transform: rotate(-7deg);
+  animation: auth-sweep-drift 20s ease-in-out infinite;
+}
+
+.auth-route {
+  position: absolute;
+  height: 1px;
+  width: 42vw;
+  min-width: 440px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(79, 70, 229, 0.52),
+    rgba(14, 165, 233, 0.42),
+    transparent
+  );
+  transform-origin: center;
+  animation: auth-route-drift 18s ease-in-out infinite;
+}
+
+.auth-route::before,
+.auth-route::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(79, 70, 229, 0.58);
+}
+
+.auth-route::before {
+  left: 20%;
+}
+
+.auth-route::after {
+  right: 12%;
+}
+
+.auth-route-one {
+  left: 7%;
+  top: 24%;
+  transform: rotate(-12deg);
+}
+
+.auth-route-two {
+  right: 4%;
+  top: 64%;
+  animation-delay: -6s;
+  transform: rotate(9deg);
+}
+
+.auth-route-three {
+  left: 22%;
+  bottom: 13%;
+  animation-delay: -11s;
+  transform: rotate(4deg);
+}
+
+.auth-panel {
+  position: absolute;
+  border: 1px solid rgba(79, 70, 229, 0.18);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 20px 70px rgba(15, 23, 42, 0.11);
+  animation: auth-panel-float 16s ease-in-out infinite;
+}
+
+.auth-panel-one {
+  left: 12%;
+  top: 18%;
+  width: 180px;
+  height: 112px;
+  border-radius: 14px;
+}
+
+.auth-panel-two {
+  right: 14%;
+  top: 20%;
+  width: 128px;
+  height: 160px;
+  border-radius: 18px;
+  animation-delay: -5s;
+}
+
+.auth-panel-three {
+  right: 20%;
+  bottom: 14%;
+  width: 220px;
+  height: 92px;
+  border-radius: 14px;
+  animation-delay: -9s;
+}
+
+@keyframes auth-route-drift {
+  0%,
+  100% {
+    opacity: 0.72;
+    translate: 0 0;
+  }
+
+  50% {
+    opacity: 1;
+    translate: 18px -8px;
+  }
+}
+
+@keyframes auth-panel-float {
+  0%,
+  100% {
+    opacity: 0.66;
+    translate: 0 0;
+  }
+
+  50% {
+    opacity: 0.88;
+    translate: 0 -12px;
+  }
+}
+
+@keyframes auth-blueprint-shift {
+  from {
+    background-position: 0 0, 0 0, 0 0;
+  }
+
+  to {
+    background-position: 90px 38px, -70px 44px, 44px 0;
+  }
+}
+
+@keyframes auth-sweep-drift {
+  0%,
+  100% {
+    opacity: 0.46;
+    translate: -18px 0;
+  }
+
+  50% {
+    opacity: 0.72;
+    translate: 22px 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-route,
+  .auth-panel,
+  .auth-blueprint,
+  .auth-sweep {
+    animation: none;
+  }
 }

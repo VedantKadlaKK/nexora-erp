@@ -13,6 +13,7 @@ from app.auth.password_handler import (
 from app.auth.jwt_handler import (
     create_access_token
 )
+from app.auth.dependencies import get_current_user
 
 router = APIRouter()
 
@@ -76,4 +77,13 @@ def login(data: dict, db: Session = Depends(get_db)):
 
     return {
         "access_token": token
+    }
+
+
+@router.get("/profile")
+def profile(current_user: User = Depends(get_current_user)):
+    return {
+        "id": current_user.id,
+        "username": current_user.username,
+        "email": current_user.email
     }

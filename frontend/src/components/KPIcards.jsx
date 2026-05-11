@@ -1,56 +1,48 @@
-export default function KPIcards({ shipments }) {
-
+export default function KPIcards({ shipments, finance, analytics }) {
   const total = shipments.length;
+  const delayed = shipments.filter((shipment) => shipment.status === "Delayed").length;
+  const inTransit = shipments.filter((shipment) => shipment.status === "In Transit").length;
+  const revenue = finance.reduce((sum, item) => sum + (item.revenue_amount || 0), 0);
 
-  const delayed = shipments.filter(
-    s => s.status === "Delayed"
-  ).length;
-
-  const inTransit = shipments.filter(
-    s => s.status === "In Transit"
-  ).length;
+  const cards = [
+    {
+      label: "Total Shipments",
+      value: total,
+      detail: `${inTransit} moving now`,
+      accent: "text-slate-950",
+    },
+    {
+      label: "Delayed",
+      value: delayed,
+      detail: `${analytics?.insights?.delay_rate || 0}% delay rate`,
+      accent: "text-red-600",
+    },
+    {
+      label: "Revenue",
+      value: `INR ${revenue.toLocaleString("en-IN")}`,
+      detail: "Recognized shipment revenue",
+      accent: "text-emerald-700",
+    },
+    {
+      label: "Delivery Rate",
+      value: `${analytics?.insights?.delivery_rate || 0}%`,
+      detail: `${analytics?.insights?.active_routes || 0} active routes`,
+      accent: "text-indigo-700",
+    },
+  ];
 
   return (
-
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-
-      <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm">
-
-        <h2 className="text-gray-500 text-sm">
-          Total Shipments
-        </h2>
-
-        <p className="text-3xl font-bold text-gray-800 mt-2">
-          {total}
-        </p>
-
-      </div>
-
-      <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm">
-
-        <h2 className="text-gray-500 text-sm">
-          Delayed
-        </h2>
-
-        <p className="text-3xl font-bold text-red-500 mt-2">
-          {delayed}
-        </p>
-
-      </div>
-
-      <div className="bg-white border border-gray-200 p-5 rounded-xl shadow-sm">
-
-        <h2 className="text-gray-500 text-sm">
-          In Transit
-        </h2>
-
-        <p className="text-3xl font-bold text-blue-500 mt-2">
-          {inTransit}
-        </p>
-
-      </div>
-
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {cards.map((card) => (
+        <section
+          key={card.label}
+          className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
+        >
+          <p className="text-sm font-semibold text-slate-500">{card.label}</p>
+          <p className={`mt-2 text-2xl font-bold ${card.accent}`}>{card.value}</p>
+          <p className="mt-2 text-sm text-slate-500">{card.detail}</p>
+        </section>
+      ))}
     </div>
-
   );
 }

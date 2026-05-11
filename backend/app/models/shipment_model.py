@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from app.database.base import Base
@@ -12,6 +13,8 @@ class Shipment(Base):
 
     customer_name = Column(String, nullable=False)
 
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=True)
+
     origin = Column(String, nullable=False)
 
     destination = Column(String, nullable=False)
@@ -23,3 +26,12 @@ class Shipment(Base):
     eta = Column(String)
 
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    customer = relationship("Customer", back_populates="shipments")
+
+    finance = relationship(
+        "Finance",
+        back_populates="shipment",
+        uselist=False,
+        cascade="all, delete-orphan"
+    )

@@ -1,36 +1,35 @@
+import EmptyState from "./EmptyState";
+
 export default function ActivityFeed({ activities }) {
-
   return (
-
-    <div className="bg-white rounded-2xl border p-5">
-
-      <h2 className="text-lg font-semibold mb-4 text-gray-800">
-        Live Activity
-      </h2>
-
-      <div className="space-y-4">
-
-        {activities.map((activity) => (
-
-          <div
-            key={activity.id}
-            className="border-b pb-3"
-          >
-
-            <p className="font-medium text-gray-800">
-              {activity.event_type}
-            </p>
-
-            <p className="text-sm text-gray-500">
-              {activity.description}
-            </p>
-
-          </div>
-
-        ))}
-
+    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+      <div className="mb-4">
+        <h2 className="text-base font-bold text-slate-950">Live Activity</h2>
+        <p className="text-sm text-slate-500">Event stream from operations</p>
       </div>
 
-    </div>
+      {activities.length === 0 ? (
+        <EmptyState
+          title="No activity yet"
+          message="Shipment and finance events will appear here."
+        />
+      ) : (
+        <div className="space-y-3">
+          {activities.slice(0, 8).map((activity) => (
+            <div
+              key={activity.id}
+              className="border-b border-slate-100 pb-3 last:border-b-0 last:pb-0"
+            >
+              <p className="text-sm font-semibold text-slate-900">
+                {activity.event_type}
+              </p>
+              <p className="mt-1 text-sm text-slate-500">
+                {activity.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
